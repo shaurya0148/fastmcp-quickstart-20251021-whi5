@@ -1,56 +1,28 @@
-"""
-FastMCP server exposing Magma RAG notebook as tools
-"""
-
 from fastmcp import FastMCP
 from typing import Dict, Any
-import json
-from utils.MagmaUtility import execute_toolchain, configuration_request
+from magma_toolchain_wrapper import run_rag_toolchain, get_magma_configuration
 
-mcp=FastMCP("Magma RAG Server")
+mcp = FastMCP("Magma RAG Server")
 
 @mcp.tool(
     name="run_rag",
-    description="Tool to interact with Magma RAG notebook, input: query (str)",
+    description="Run Magma RAG toolchain. Inputs: query (str), config_id (str, optional), config (object, optional), env (str, optional).",
 )
-
-def run_rag(query: str) -> Dict[str, Any]:
-    """Executes your Magma RAG toolchain and returns JSON output"""
+def run_rag(query: str, config_id: str = "rag_toolchain", config: Dict[str, Any] = None, env: str = "dev") -> Dict[str, Any]:
     try:
-        input_payload = {"query": query}
-        config_id = 'rag_toolchain'
-        config = {
-            "output_field_mapping": {
-                "keys": ["generated_answer", "context"]
-            },
-            "retriever": {
-                "dense": {
-                    "collections": [
-                        {
-                            "collection_name": "ibm_docs_slate",
-                            "filters": [{"filter_type": "digital_content_codes", "items": ["SS8H2S"]}]
-                        },
-                        {
-                            "collection_name": "marketing_docs_slate",
-                            "filters": [{"filter_type": "ut_30", "items": ["30BIB"]}]
-                        }
-                    ]
-                }
-            }
-        }
-        result = execute_toolchain(
-            env='dev',
-            toolchain='rag',
-            input=input_payload,
-            config_id=config_id,
-            config=config,
-            verbose=False
-        )
-        if isinstance(result, str):
-            try:
-                return json.loads(result)
-            except Exception:
-                return {"raw": result}
-        return result
+        return run_rag_toolchain(query=query, config_id=config_id, config=config, env=env)
     except Exception as e:
         return {"error": str(e)}
+
+@mcp.tool(
+    name="get_config",
+    description="Get a Magma configuration. Inputs: env (str), api_path (str)",
+)
+def get_config(env: str, api_path: str) -> Dict[str, Any]:
+    try:
+        return get_magma_configuration(env=env, api_path=api_path)
+    except Exception as e:
+        return {"error": str(e)}
+
+if __name__ == "__main__":
+    mcp.run(transport="streamable-http", host="0.0.0.0", port=8080)
