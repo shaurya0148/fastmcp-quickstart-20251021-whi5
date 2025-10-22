@@ -1,0 +1,14 @@
+# FastMCP server
+fastmcp>=1.0.0
+
+# HTTP requests
+requests>=2.31.0
+
+# Core data manipulation
+numpy>=1.26.0
+
+# Optional: small, minimal ML support (if your notebook uses RAG / embeddings)
+torch>=2.2.0
+
+# Lightweight progress bar for long-running toolchain calls
+tqdm>=4.66.0
