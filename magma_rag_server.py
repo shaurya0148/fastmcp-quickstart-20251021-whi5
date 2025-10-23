@@ -7,9 +7,9 @@ mcp = FastMCP("magma-rag-server")
 
 @mcp.tool(
     name="run_rag",
-    description="Run Magma RAG toolchain. Inputs: query (str), config_id (str, optional), config (dict, optional)."
+    description="Run Magma RAG toolchain. Inputs: query (str), config_id (str, optional), config (dict, optional), env (str, optional)"
 )
-def run_rag(query: str, config_id: str = "rag_toolchain", config: Dict[str, Any] = None) -> Dict[str, Any]:
+def run_rag(query: str, config_id: str = "rag_toolchain", config: Dict[str, Any] = None, env: str = None) -> Dict[str, Any]:
     try:
         result = run_rag_toolchain(query=query, config_id=config_id, config=config, env="dev", verbose=False)
         return result
@@ -18,9 +18,9 @@ def run_rag(query: str, config_id: str = "rag_toolchain", config: Dict[str, Any]
 
 @mcp.tool(
     name="get_config",
-    description="Get a Magma configuration. Inputs: api_path (str)"
+    description="Get a Magma configuration. Inputs: api_path (str), env (str, optional)"
 )
-def get_config(api_path: str) -> Dict[str, Any]:
+def get_config(api_path: str, env: str = None) -> Dict[str, Any]:
     try:
         result = get_magma_configuration(env="dev", api_path=api_path)
         return result
