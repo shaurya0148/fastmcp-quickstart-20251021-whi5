@@ -7,7 +7,7 @@ mcp = FastMCP("magma-rag-server")
 
 @mcp.tool(
     name="run_rag",
-    description="Answer questions about IBM MaaS360 by searching documentation using RAG. Pass the user's complete question as the 'query' parameter for best results. Example: 'What to do if my APNS certificate expires?'"
+    description="Search IBM MaaS360 documentation to answer ANY user question about device management, enrollment, certificates, policies, troubleshooting, configuration, or any other MaaS360 topic. Always use this tool when users ask MaaS360-related questions. Pass the user's complete question as the 'query' parameter."
 )
 def run_rag(
     query: str,
