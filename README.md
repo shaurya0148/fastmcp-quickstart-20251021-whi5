@@ -7,7 +7,7 @@ This is a quickstart example for FastMCP, automatically set up for you!
 This repository contains a simple echo server example that demonstrates FastMCP capabilities.
 
 ### Files
-- `echo.py` - A simple MCP server that echoes back your messages
+- `magma_rag_server.py` - A simple MCP server that echoes back your messages
 
 ### Deployment
 
