@@ -8,7 +8,6 @@ def run_rag_toolchain(query: str, config_id: str = None,
     env = "dev"
     config_id = "rag_toolchain"
     
-    # Default config with your collections
     default_config = {
         "output_field_mapping": {
             "keys": ["generated_answer", "context"]
