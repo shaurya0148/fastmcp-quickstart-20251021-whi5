@@ -7,22 +7,39 @@ mcp = FastMCP("magma-rag-server")
 
 @mcp.tool(
     name="run_rag",
-    description="Run Magma RAG toolchain. Input: query (str). Uses dev environment and rag_toolchain config internally."
+    description="Run Magma RAG toolchain. Inputs: query (str), config_id (str, optional), config (dict, optional)."
 )
-def run_rag(query: str, config: Dict[str, Any] = None) -> Dict[str, Any]:
+def run_rag(
+    query: str,
+    config_id: str = "rag_toolchain",
+    config: Dict[str, Any] = None
+) -> Dict[str, Any]:
+    """
+    Always uses env='dev' internally to avoid WatsonX sending invalid env.
+    """
     try:
-        result = run_rag_toolchain(query=query, config=config)
+        # Force env to 'dev' regardless of WatsonX input
+        result = run_rag_toolchain(
+            query=query,
+            config_id=config_id,
+            config=config,
+            env="dev",
+            verbose=False
+        )
         return result
     except Exception as e:
         return {"error": str(e)}
 
 @mcp.tool(
     name="get_config",
-    description="Get a Magma configuration. Input: api_path (str). Uses dev environment internally."
+    description="Get a Magma configuration. Input: api_path (str). Always uses env='dev'."
 )
 def get_config(api_path: str) -> Dict[str, Any]:
+    """
+    Force env='dev' to prevent WatsonX from sending invalid environment values.
+    """
     try:
-        result = get_magma_configuration(api_path=api_path)
+        result = get_magma_configuration(env="dev", api_path=api_path)
         return result
     except Exception as e:
         return {"error": str(e)}
