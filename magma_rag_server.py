@@ -16,7 +16,7 @@ def run_rag(
     env: str = None,
 ) -> Dict[str, Any]:
     """
-    Answer user questions by searching IBM MaaS360 documentation.
+    Answer user questions by searching the IBM MaaS360 documentation.
     Always uses env='dev' internally to avoid WatsonX sending invalid env.
     """
     try:
