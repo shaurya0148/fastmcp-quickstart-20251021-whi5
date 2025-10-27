@@ -25,6 +25,19 @@ def run_rag_toolchain(query: str, config_id: str = None,
                     }
                 ]
             }
+        },
+        "render_prompt": {
+            "context_prompt_template": {
+                "value": "Source: {url}\nDocument: {page_content}",
+                "input_variables": {
+                    "page_content": "page_content",
+                    "url": "metadata.source"
+                }
+            },
+            "prompt_template": {
+                "value": "some prompt here that references {context} and {query}",
+                "input_variables": ["context", "query"]
+            }
         }
     }
 
