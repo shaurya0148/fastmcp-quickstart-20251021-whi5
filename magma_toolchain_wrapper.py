@@ -16,13 +16,9 @@ def run_rag_toolchain(query: str, config_id: str = None,
             "dense": {
                 "collections": [
                     {
-                        "collection_name": "ibm_docs_slate",
-                        "filters": [{"filter_type": "digital_content_codes", "items": ["SS8H2S"]}]
+                        "collection_name": "mmas_360_docs",
+                        "filters": [{"filter_type": "product_names", "items": ["MaaS360", "IBM MaaS360"]}]
                     },
-                    {
-                        "collection_name": "marketing_docs_slate",
-                        "filters": [{"filter_type": "ut_30", "items": ["30BIB"]}]
-                    }
                 ]
             }
         },
